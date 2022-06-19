@@ -48,6 +48,21 @@ Screenshot 4:
 
 Here you can see the result when the job is finished.
 
+## Prerequisites
+
+To be able to run this script, you have two possible options:
+
+1.  You need to change the ExecutionPolicy on your computer.
+To do so, start powershell with **Admin-Rights** and paste the following code and confirm it with [A]:
+
+<br>
+
+```powershell
+Set-ExecutionPolicy bypass
+```
+<br>
+
+2.  If you dont want to change the ExecutionPolicy, you can copy and paste the content of the powershell script and create and run a new powershell script on your local machine.
 
 ## Errors or Comments
 
