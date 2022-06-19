@@ -37,7 +37,7 @@ function global:MainProgram {
     # popup defintion
     function global:popup_one {
         $wsh = New-Object -ComObject Wscript.Shell
-        $wsh.Popup("Please choose Source and Destination folder!", "0", "Fehler!", 0x1)
+        $wsh.Popup("Please choose Source and Destination folder!", "0", "Error!", 0x1)
     }
 
     # definition of handler click actions
