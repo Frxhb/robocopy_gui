@@ -1,4 +1,4 @@
-# Robocopy_gui
+# robocopy_gui
 
 A powerful Powershell Robocopy Gui.
 
