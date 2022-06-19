@@ -57,7 +57,6 @@ function global:MainProgram {
 
         $TextBox1.ReadOnly = $false
         $global:TextBox1.AppendText($First_Path_without_komma)
-        #Write-Host $First_Path_without_komma
         $TextBox1.ReadOnly = $true
     }
 
@@ -75,7 +74,6 @@ function global:MainProgram {
 
         $TextBox2.ReadOnly = $false
         $global:TextBox2.AppendText($Second_Path_without_komma)
-        #Write-Host $Second_Path_without_komma
         $TextBox2.ReadOnly = $true 
     }
 
@@ -122,7 +120,6 @@ function global:MainProgram {
         if (!$checkBox1.Checked -and !$checkBox2.Checked -and !$checkBox3.Checked -and !$checkBox4.Checked) {
 
             $cmd_process = start-process -FilePath C:\Windows\System32\cmd.exe -Verb RunAs -ArgumentList ("/K" , "robocopy" , "$both_path" , "/V") -PassThru
-            Write-Host $cmd_process = start-process -FilePath C:\Windows\System32\cmd.exe -Verb RunAs -ArgumentList ("/K" , "robocopy" , "$both_path" , "/V") -PassThru
 
             $global:process_id = $cmd_process.Id
 
@@ -133,7 +130,6 @@ function global:MainProgram {
         
         else {
             $cmd_process = start-process -FilePath C:\Windows\System32\cmd.exe -Verb RunAs -ArgumentList ("/K" , "robocopy" , "$both_path" , "/V" , "$param") -PassThru
-            Write-Host $cmd_process = start-process -FilePath C:\Windows\System32\cmd.exe -Verb RunAs -ArgumentList ("/K" , "robocopy" , "$both_path" , "/V" , "$param") -PassThru
             $global:process_id = $cmd_process.Id
             
             $RichTextBox1.ReadOnly = $false
