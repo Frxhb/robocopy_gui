@@ -26,13 +26,13 @@ Here is a small example of what will happen in the background.
 The code which will be executed is:
 
 ```powershell
-PS C:\> start-process -FilePath C:\Windows\System32\cmd.exe RunAs -ArgumentList /K robocopy ` "C:\Users\Francesco\Desktop\Test 1" "C:\Users\Francesco\Desktop\Copy_dest" /V /E /R:0  /W:0  -PassThru
+PS C:\> start-process -FilePath C:\Windows\System32\cmd.exe RunAs -ArgumentList /K robocopy "C:\Users\Francesco\Desktop\Test 1" "C:\Users\Francesco\Desktop\Copy_dest" /V /E /R:0  /W:0  -PassThru
 ```
 
 So the important part is:
 
 ```powershell
-PS C:\> [....] robocopy "C:\Users\Francesco\Desktop\Test 1" "C:\Users\Francesco\Desktop\Copy_dest" ` /V /E /R:0  /W:0  -PassThru
+PS C:\> robocopy "C:\Users\Francesco\Desktop\Test 1" "C:\Users\Francesco\Desktop\Copy_dest" /V /E /R:0  /W:0  -PassThru
 ```
 <br>
 
