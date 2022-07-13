@@ -1,10 +1,10 @@
-﻿# new powershell gui for learning
+# new powershell gui for learning
 # start date: 12.06.2022
 # last edit: 19.06.2022
 # syntax note: comments and explanations above commands
 
 # clearing variables each time script runs
-if ($null -ne $first_path -xor $null -ne $second_path -xor $null -ne $both_path -xor $null -ne $process_id -xor $null -ne $param) {
+if ($null -ne $first_path -or $null -ne $second_path -or $null -ne $both_path -or $null -ne $process_id -or $null -ne $param) {
 
     Clear-Variable first_path 
 
@@ -50,13 +50,12 @@ function global:MainProgram {
         $FolderBrowser1 = New-Object System.Windows.Forms.FolderBrowserDialog
         $FolderBrowser1.ShowDialog() | Out-Null
 
-        $First_Path_without_komma = $FolderBrowser1.SelectedPath
+        $global:First_Path = $FolderBrowser1.SelectedPath
 
         # define !GLOBAL! path variable
-        $global:First_Path = "`"$First_Path_without_komma`""
 
         $TextBox1.ReadOnly = $false
-        $global:TextBox1.AppendText($First_Path_without_komma)
+        $global:TextBox1.AppendText("$First_Path")
         $TextBox1.ReadOnly = $true
     }
 
@@ -68,12 +67,10 @@ function global:MainProgram {
         $FolderBrowser2 = New-Object System.Windows.Forms.FolderBrowserDialog
         $FolderBrowser2.ShowDialog() | Out-Null
 
-        $Second_Path_without_komma = $FolderBrowser2.SelectedPath
-
-        $global:Second_Path = "`"$Second_Path_without_komma`""
+        $global:Second_Path = $FolderBrowser2.SelectedPath
 
         $TextBox2.ReadOnly = $false
-        $global:TextBox2.AppendText($Second_Path_without_komma)
+        $global:TextBox2.AppendText("$second_path")
         $TextBox2.ReadOnly = $true 
     }
 
@@ -95,7 +92,7 @@ function global:MainProgram {
         }
 
         if ($checkBox3.Checked) {
-            $param = $param + "/R:0 " , "/W:0 "
+            $param = $param + "/R:0" , "/W:0"
         }
 
         
@@ -113,13 +110,17 @@ function global:MainProgram {
 
         #combine both path:
 
-        $global:both_path = $First_Path , $Second_path
+        $stars = "*.*"
+
+        $global:both_path = $First_Path , $stars ,  $Second_path
+
+        write-Host $both_path
 
         #Write-Host $both_path
 
         if (!$checkBox1.Checked -and !$checkBox2.Checked -and !$checkBox3.Checked -and !$checkBox4.Checked) {
 
-            $cmd_process = start-process -FilePath C:\Windows\System32\cmd.exe -Verb RunAs -ArgumentList ("/K" , "robocopy" , "$both_path" , "/V") -PassThru
+            $cmd_process = start-process -FilePath C:\Windows\System32\cmd.exe -ArgumentList ("/K" , "robocopy" , "$first_path" , "$stars" , "$second_path" ,  "/V") -PassThru
 
             $global:process_id = $cmd_process.Id
 
@@ -129,7 +130,8 @@ function global:MainProgram {
         }
         
         else {
-            $cmd_process = start-process -FilePath C:\Windows\System32\cmd.exe -Verb RunAs -ArgumentList ("/K" , "robocopy" , "$both_path" , "/V" , "$param") -PassThru
+            $cmd_process = start-process -FilePath C:\Windows\System32\cmd.exe -ArgumentList ("/K" , "robocopy" , "$first_path" , "$stars" , "$second_path" ,  "/V" , "$param") -PassThru
+
             $global:process_id = $cmd_process.Id
             
             $RichTextBox1.ReadOnly = $false
@@ -141,7 +143,8 @@ function global:MainProgram {
 
     # stop-job definition
     $global:handler_4_Click = {
-        $cmd_processs | Stop-Process
+        #Write-Host $process_id
+        Stop-Process -id $process_id -Force
     }
         
 
@@ -400,7 +403,7 @@ function global:MainProgram {
         $mainform.Controls.Add($DestinationButton)
         $mainform.Controls.Add($CancelButton)
         $mainform.Controls.Add($start_job_button)
-        $mainform.Controls.Add($stop_job_button)
+        #$mainform.Controls.Add($stop_job_button)
         
         # implement checkboxes
         $mainform.Controls.Add($checkBox1)
